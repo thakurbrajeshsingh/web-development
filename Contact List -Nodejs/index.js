@@ -5,14 +5,14 @@ const port = 8000;
 
 
 
-
+const db = require('./config/mongoose')
 const app=express();
 
 
 
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
-app.use(express.urlencoded());
+app.use(express.urlencoded());      //middle ware
 app.use(express.static('assets'));
 
 
@@ -65,7 +65,6 @@ app.post('/create-contact',(req,res)=>{
     //     phone : req.body.phone
     // })
     contactList.push(req.body);
-    // return res.redirect('/');
     return res.redirect('/');
 });
 
