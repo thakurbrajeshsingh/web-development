@@ -50,9 +50,22 @@ var contactList = [
 ]
 
 app.get('/',(req,res)=>{
-    return res.render('home',{ 
-    title :'Contact List',
-    contact_list : contactList});
+
+    Contact.find({},function(err,contact){
+        if(err){
+            console.log("Error in connecting db");
+            return;
+        }
+        return res.render('home',{ 
+            title :'Contact List',
+            contact_list : contact
+        });
+    })
+
+
+
+
+    
 })
 
 app.get('/practice',(req,res)=>{
@@ -81,21 +94,24 @@ app.post('/create-contact',(req,res)=>{
     })
 });
 
+
 // for deleting contact
 app.get('/delete-contact',(req,res)=>{
     
-    let phone = req.query.phone;
+    let id = req.query.id;
 
-    let contactIndex = contactList.findIndex(contact=> contact.phone == phone);
-    
-    if(contactIndex != -1){
-        contactList.splice(contactIndex,1);
-    }
-    return res.redirect('back');
+    Contact.findByIdAndDelete(id,(err)=>{
+        if(err){
+            console.log("Error :::cannot delete");
+            return;
+        }
+        return res.redirect('back');
+    })
 
     });
 
 
+    // server stats
 app.listen(port,(err)=>{
     if(err){
         console.log("Yup! Error Occured!");
