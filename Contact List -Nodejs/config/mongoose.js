@@ -1,7 +1,7 @@
 
 // require the library
 const mongoose = require('mongoose');
-// connect to database
+// create contacts_list_db & connect to database
 mongoose.connect('mongodb://localhost/contacts_list_db');
 
 // acquire connection (to check if its successfull)
